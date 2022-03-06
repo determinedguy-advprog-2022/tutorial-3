@@ -57,11 +57,11 @@ public class IronGolemTest {
     }
 
     @Test
-    public void testIronGolemOverrideCountItemMethod() throws Exception {
+    public void testIronGolemHasIsItemMethod() throws Exception {
         Class<?>[] countItemArgs = new Class[2];
-        countItemArgs[0] = List.class;
+        countItemArgs[0] = String.class;
         countItemArgs[1] = String.class;
-        Method countItem = ironGolemClass.getDeclaredMethod("countItem", countItemArgs);
+        Method countItem = ironGolemClass.getDeclaredMethod("isItem", countItemArgs);
 
         assertEquals("java.lang.String",
             countItem.getGenericReturnType().getTypeName());
