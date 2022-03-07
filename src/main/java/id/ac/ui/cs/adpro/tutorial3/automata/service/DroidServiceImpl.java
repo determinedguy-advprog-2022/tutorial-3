@@ -2,10 +2,28 @@ package id.ac.ui.cs.adpro.tutorial3.automata.service;
 
 import id.ac.ui.cs.adpro.tutorial3.automata.core.droid.Droid;
 import java.util.List;
+
+import id.ac.ui.cs.adpro.tutorial3.automata.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DroidServiceImpl implements DroidService {
+
+    @Autowired
+    private DroidRepository droidRepository;
+
+    @Autowired
+    private FluidsRepository fluidsRepository;
+
+    @Autowired
+    private GolemRepository golemRepository;
+
+    @Autowired
+    private InventoryRepository inventoryRepository;
+
+    @Autowired
+    private LoggerRepository loggerRepository;
 
     /**
      * Mengambil seluruh droid yang tersimpan.
@@ -15,8 +33,9 @@ public class DroidServiceImpl implements DroidService {
      */
     @Override
     public List<Droid> fetchDroids() {
-        // TODO: Complete this method
-        return null;
+        List<Droid> droids = droidRepository.findAll();
+        // TODO: Add Fluids and Golems, too!
+        return droids;
     }
 
     /**
@@ -26,8 +45,8 @@ public class DroidServiceImpl implements DroidService {
      */
     @Override
     public List<String> fetchInventories() {
-        // TODO: Complete this method
-        return null;
+        List<String> inventories = inventoryRepository.fetchInventory();
+        return inventories;
     }
 
     /**
@@ -37,7 +56,7 @@ public class DroidServiceImpl implements DroidService {
      */
     @Override
     public void addInventory(String item) {
-        // TODO: Complete this method
+        inventoryRepository.addItem(item);
     }
 
     /**
@@ -47,8 +66,8 @@ public class DroidServiceImpl implements DroidService {
      */
     @Override
     public List<String> fetchLogs() {
-        // TODO: Complete this method
-        return null;
+        List<String> logs = loggerRepository.getLogs();
+        return logs;
     }
 
     /**

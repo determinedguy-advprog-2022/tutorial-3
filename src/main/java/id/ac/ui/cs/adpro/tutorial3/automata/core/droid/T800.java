@@ -11,7 +11,7 @@ public class T800 extends DroidImpl implements Droid {
 
     @Override
     public String liftItem(String item) {
-        return ""; // TODO: Make this String meaningful
+        return "Lifting " + item + " using mechanical arms";
     }
 
     /**
@@ -23,17 +23,21 @@ public class T800 extends DroidImpl implements Droid {
      */
     @Override
     public String countItem(List<String> inventory, String wanted) {
-        return ""; // TODO: Make this String meaningful
+        int count = 0;
+        for (String item : inventory) {
+            if (item.equals(wanted)) count++;
+        }
+        return String.format("Counted %d %s\n", count, wanted);
     }
 
     @Override
     public String useTransporter() {
-        return "Using transporter";
+        return "Using any available transporter";
     }
 
     @Override
     public String useCrane() {
-        return "Using crane";
+        return "Using any available crane";
     }
 
     @Override
