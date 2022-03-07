@@ -57,11 +57,11 @@ public class SnowGolemTest {
     }
 
     @Test
-    public void testSnowGolemOverrideCountItemMethod() throws Exception {
+    public void testSnowGolemHasIsItemMethod() throws Exception {
         Class<?>[] countItemArgs = new Class[2];
-        countItemArgs[0] = List.class;
+        countItemArgs[0] = String.class;
         countItemArgs[1] = String.class;
-        Method countItem = snowGolemClass.getDeclaredMethod("countItem", countItemArgs);
+        Method countItem = snowGolemClass.getDeclaredMethod("isItem", countItemArgs);
 
         assertEquals("java.lang.String",
             countItem.getGenericReturnType().getTypeName());

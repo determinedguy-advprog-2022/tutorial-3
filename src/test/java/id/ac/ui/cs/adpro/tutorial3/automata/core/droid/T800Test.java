@@ -52,7 +52,7 @@ public class T800Test {
     @Test
     public void testLiftItemIsCorrectlyImplemented() {
         String result = t800.liftItem("box");
-        assertEquals("Lifting box using using mechanical arms", result);
+        assertEquals("Lifting box using mechanical arms", result);
     }
 
     @Test
