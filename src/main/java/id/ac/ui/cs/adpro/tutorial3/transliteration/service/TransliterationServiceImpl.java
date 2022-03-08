@@ -25,7 +25,7 @@ public class TransliterationServiceImpl implements TransliterationService {
         List<Spell> listOfText = parser.parseSentence(text);
         List<Spell> listOfResult = new ArrayList<>();
         for (Spell spell : listOfText) {
-            Spell encoded = LinguaTranslator.translate(spell, Latin.getInstance());
+            Spell encoded = LinguaTranslator.translate(spell, Aeron.getInstance());
             String resultShifter = processAeronShifter(encoded.getText(), -3);
             String resultCipher = processAeronCipher(resultShifter, "encode");
             Spell newSpell = new Spell(resultCipher, Aeron.getInstance());
