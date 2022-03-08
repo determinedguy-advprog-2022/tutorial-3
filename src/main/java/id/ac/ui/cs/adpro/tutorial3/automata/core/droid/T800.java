@@ -27,7 +27,7 @@ public class T800 extends DroidImpl implements Droid {
         for (String item : inventory) {
             if (item.equals(wanted)) count++;
         }
-        return String.format("Counted %d %s\n", count, wanted);
+        return String.format("Counted %d %s", count, wanted);
     }
 
     @Override

@@ -23,7 +23,7 @@ public class FluidsAdapter implements Droid {
     public String countItem(List<String> inventory, String item) {
         String countBinary = fluids.splitBy(inventory, item);
         int decimal = Integer.parseInt(countBinary, 2);
-        return String.format("Counted %d %s\n", decimal, item);
+        return String.format("Counted %d %s", decimal, item);
     }
 
     @Override

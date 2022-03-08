@@ -11,7 +11,7 @@ public class Gemini extends DroidImpl implements Droid {
 
     @Override
     public String liftItem(String item) {
-        return String.format("Lifting %s with mechanical arms\n", item);
+        return String.format("Lifting %s with mechanical arms", item);
     }
 
     /**
@@ -27,7 +27,7 @@ public class Gemini extends DroidImpl implements Droid {
         for (String item : inventory) {
             if (item.equals(wanted)) count++;
         }
-        return String.format("Found %d %s\n", count, wanted);
+        return String.format("Found %d %s", count, wanted);
     }
 
     @Override

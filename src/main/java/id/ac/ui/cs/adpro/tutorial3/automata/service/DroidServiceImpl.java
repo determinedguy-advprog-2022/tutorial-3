@@ -137,7 +137,7 @@ public class DroidServiceImpl implements DroidService {
      * @param action Aksi yang dilakukan droid
      */
     protected void recordLog(Droid droid, String action) {
-        String record = String.format("%s: %s\n", droid.getName(), action);
+        String record = String.format("%s: %s", droid.getName(), action);
         loggerRepository.addRecord(record);
     }
 }

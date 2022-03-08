@@ -8,14 +8,14 @@ import java.util.List;
 public class GolemAdapter implements Droid {
 
     private Golem golem;
-    private String item;
+    private String savedItem;
 
     public GolemAdapter(Golem golem) {
         this.golem = golem;
     }
 
     public void setItem(String item) {
-        this.item = item;
+        this.savedItem = item;
     }
 
     @Override
@@ -35,13 +35,13 @@ public class GolemAdapter implements Droid {
                 count++;
             }
         }
-        res.append(String.format("Counted %d %s\n", count, item));
-        return null;
+        res.append(String.format("Counted %d %s", count, item));
+        return res.toString();
     }
 
     @Override
     public String useTransporter() {
-        return this.golem.toss(this.item);
+        return this.golem.toss(this.savedItem);
     }
 
     @Override
