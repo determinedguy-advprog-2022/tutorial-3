@@ -98,29 +98,34 @@ public class DroidServiceImpl implements DroidService {
                 droid = loopDroid;
             }
         }
-        // If the Droid
+        // If the Droid is found inside unit list
         if (droid != null) {
             String log = "";
-            if (routine == 0) {
-                log = droid.liftItem(inventoryRepository.getItem());
-                recordLog(droid, log);
-            } else if (routine == 1) {
-                log = droid.countItem(fetchInventories(), inventoryRepository.getItem());
-                recordLog(droid, log);
-                // Fluids need to be merged if it's split before
-                if (droid.getType().equals("Fluids")) {
-                    String newLog = ((FluidsAdapter) droid).merge();
-                    recordLog(droid, newLog);
-                }
-            } else if (routine == 2) {
-                if (droid.getType().equals("Golem")) {
-                    ((GolemAdapter) droid).setItem(inventoryRepository.getItem());
-                }
-                log = droid.useTransporter();
-                recordLog(droid, log);
-            } else if (routine == 3) {
-                log = droid.useCrane();
-                recordLog(droid, log);
+            switch (routine) {
+                case 0:
+                    log = droid.liftItem(inventoryRepository.getItem());
+                    recordLog(droid, log);
+                    break;
+                case 1:
+                    log = droid.countItem(fetchInventories(), inventoryRepository.getItem());
+                    recordLog(droid, log);
+                    // Fluids need to be merged if it's split before
+                    if (droid.getType().equals("Fluids")) {
+                        String newLog = ((FluidsAdapter) droid).merge();
+                        recordLog(droid, newLog);
+                    }
+                    break;
+                case 2:
+                    if (droid.getType().equals("Golem")) {
+                        ((GolemAdapter) droid).setItem(inventoryRepository.getItem());
+                    }
+                    log = droid.useTransporter();
+                    recordLog(droid, log);
+                    break;
+                case 3:
+                    log = droid.useCrane();
+                    recordLog(droid, log);
+                    break;
             }
         }
     }
