@@ -1,54 +1,29 @@
 package id.ac.ui.cs.adpro.tutorial3.transliteration.service;
 
 import id.ac.ui.cs.adpro.tutorial3.transliteration.core.lingua.Aeron;
-import id.ac.ui.cs.adpro.tutorial3.transliteration.core.lingua.Latin;
 import id.ac.ui.cs.adpro.tutorial3.transliteration.core.tools.*;
 import id.ac.ui.cs.adpro.tutorial3.transliteration.core.util.Spell;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class TransliterationServiceImpl implements TransliterationService {
 
     private boolean recentRequestType;
     private String recentRequestValue;
+    private TranslatorFacade translatorFacade;
 
     public TransliterationServiceImpl() {
-        this.recentRequestValue = "";
+        this.translatorFacade = new TranslatorFacade();
     }
 
     @Override
     public String encode(String text) {
-        Parser parser = new Parser(Latin.getInstance());
-        List<Spell> listOfText = parser.parseSentence(text);
-        List<Spell> listOfResult = new ArrayList<>();
-        for (Spell spell : listOfText) {
-            Spell encoded = LinguaTranslator.translate(spell, Aeron.getInstance());
-            String resultShifter = processAeronShifter(encoded.getText(), -3);
-            String resultCipher = processAeronCipher(resultShifter, "encode");
-            Spell newSpell = new Spell(resultCipher, Aeron.getInstance());
-            listOfResult.add(newSpell);
-        }
-        Joiner joiner = new Joiner(Aeron.getInstance());
-        return joiner.join(listOfResult);
+        return translatorFacade.encode(text);
     }
 
     @Override
     public String decode(String code) {
-        Parser parser = new Parser(Aeron.getInstance());
-        List<Spell> listOfCode = parser.parseSentence(code);
-        List<Spell> listOfResult = new ArrayList<>();
-        for (Spell spell : listOfCode) {
-            String resultCipher = processAeronCipher(spell.getText(), "decode");
-            String resultShifter = processAeronShifter(resultCipher, 3);
-            Spell newSpell = new Spell(resultShifter, Aeron.getInstance());
-            Spell decoded = LinguaTranslator.translate(newSpell, Latin.getInstance());
-            listOfResult.add(decoded);
-        }
-        Joiner joiner = new Joiner(Latin.getInstance());
-        return joiner.join(listOfResult);
+        return translatorFacade.decode(code);
     }
 
     @Override
