@@ -45,4 +45,8 @@ public class FluidsAdapter implements Droid {
     public String getType() {
         return "Fluids";
     }
+
+    public String merge() {
+        return fluids.merge();
+    }
 }

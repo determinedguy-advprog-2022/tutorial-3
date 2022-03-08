@@ -5,6 +5,10 @@ import id.ac.ui.cs.adpro.tutorial3.automata.core.droid.Droid;
 import java.util.ArrayList;
 import java.util.List;
 
+import id.ac.ui.cs.adpro.tutorial3.automata.core.fluids.Fluids;
+import id.ac.ui.cs.adpro.tutorial3.automata.core.fluids.FluidsAdapter;
+import id.ac.ui.cs.adpro.tutorial3.automata.core.golem.Golem;
+import id.ac.ui.cs.adpro.tutorial3.automata.core.golem.GolemAdapter;
 import id.ac.ui.cs.adpro.tutorial3.automata.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,9 +40,16 @@ public class DroidServiceImpl implements DroidService {
      */
     @Override
     public List<Droid> fetchDroids() {
-        List<Droid> droids = droidRepository.findAll();
-        // TODO: Add Fluids and Golems, too!
-        return droids;
+        // Loop Fluids and Golem (which has to be adapted first) to be added to droidRepository
+        for (Fluids fluids : fluidsRepository.findAll()) {
+            droidRepository.add(new FluidsAdapter(fluids));
+        }
+        for (Golem golem : golemRepository.findAll()) {
+            droidRepository.add(new GolemAdapter(golem));
+        }
+        // Add droids to the list
+        this.units = droidRepository.findAll();
+        return units;
     }
 
     /**
@@ -81,7 +92,37 @@ public class DroidServiceImpl implements DroidService {
      */
     @Override
     public void doRoutine(String droidName, int routine) {
-        // TODO: Complete this method
+        Droid droid = null;
+        for (Droid loopDroid : units) {
+            if (loopDroid.getName().equals(droidName)) {
+                droid = loopDroid;
+            }
+        }
+        // If the Droid
+        if (droid != null) {
+            String log = "";
+            if (routine == 0) {
+                log = droid.liftItem(inventoryRepository.getItem());
+                recordLog(droid, log);
+            } else if (routine == 1) {
+                log = droid.countItem(fetchInventories(), inventoryRepository.getItem());
+                recordLog(droid, log);
+                // Fluids need to be merged if it's split before
+                if (droid.getType().equals("Fluids")) {
+                    String newLog = ((FluidsAdapter) droid).merge();
+                    recordLog(droid, newLog);
+                }
+            } else if (routine == 2) {
+                if (droid.getType().equals("Golem")) {
+                    ((GolemAdapter) droid).setItem(inventoryRepository.getItem());
+                }
+                log = droid.useTransporter();
+                recordLog(droid, log);
+            } else if (routine == 3) {
+                log = droid.useCrane();
+                recordLog(droid, log);
+            }
+        }
     }
 
     /**
@@ -91,6 +132,7 @@ public class DroidServiceImpl implements DroidService {
      * @param action Aksi yang dilakukan droid
      */
     protected void recordLog(Droid droid, String action) {
-        // TODO: Complete this method
+        String record = String.format("%s: %s\n", droid.getName(), action);
+        loggerRepository.addRecord(record);
     }
 }
