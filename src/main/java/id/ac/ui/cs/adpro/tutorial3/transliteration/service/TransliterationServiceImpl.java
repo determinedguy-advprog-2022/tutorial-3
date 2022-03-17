@@ -1,8 +1,7 @@
 package id.ac.ui.cs.adpro.tutorial3.transliteration.service;
 
 import id.ac.ui.cs.adpro.tutorial3.transliteration.core.lingua.Aeron;
-import id.ac.ui.cs.adpro.tutorial3.transliteration.core.tools.Cipher;
-import id.ac.ui.cs.adpro.tutorial3.transliteration.core.tools.Shifter;
+import id.ac.ui.cs.adpro.tutorial3.transliteration.core.tools.*;
 import id.ac.ui.cs.adpro.tutorial3.transliteration.core.util.Spell;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +10,20 @@ public class TransliterationServiceImpl implements TransliterationService {
 
     private boolean recentRequestType;
     private String recentRequestValue;
+    private TranslatorFacade translatorFacade;
 
     public TransliterationServiceImpl() {
-        // TODO: complete this constructor
+        this.translatorFacade = new TranslatorFacade();
     }
 
     @Override
     public String encode(String text) {
-        // TODO: complete this method
-        return "";
+        return translatorFacade.encode(text);
     }
 
     @Override
     public String decode(String code) {
-        // TODO: complete this method
-        return "";
+        return translatorFacade.decode(code);
     }
 
     @Override
