@@ -6,5 +6,7 @@ public interface InventoryRepository {
 
     List<String> fetchInventory();
 
+    String getItem();
+
     void addItem(String item);
 }
